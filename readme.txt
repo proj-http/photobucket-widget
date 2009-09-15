@@ -71,5 +71,10 @@ If you have additional questions, please message in my blog, I will reply you as
 
 == Changelog ==
 
+= 0.9 [SEP 15, 2009] =
+* Error Display: "PHP Error: Call to undefined function exif_imagetype()"
+* This is because the PHP configuration issue, because not taken into account using the "exif_imagetype" function result.
+* Thank "revelc(http://hply.info)" proposed BUG.
+
 = 0.8 [SEP 11, 2009] =
 * First release.

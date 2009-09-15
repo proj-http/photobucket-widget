@@ -5,7 +5,7 @@ Author URI: http://xfuxing.com
 Plugin URI: http://xfuxing.com/abc/76
 Description: Making very easy for you to embed in sidebars from your photobucket account!
 Author: freephp
-Version: 0.8
+Version: 0.9
 */
 load_plugin_textdomain('photobucket-widget', 'wp-content/plugins/photobucket-widget');
 
@@ -177,6 +177,15 @@ function thumb_dir(){
 function create_thumb($src_file,$dst_file,$new_width){
 	if (file_exists($dst_file)) {
 		return;
+	}
+//thanks "revelc(http://hply.info)" for this bug.
+	if (!function_exists('exif_imagetype')){
+		function exif_imagetype($filename){
+			if((list($width, $height, $type, $attr) = getimagesize($filename)) !== false ){
+				return $type;
+			}
+			return false;
+		}
 	}
 	$type=exif_imagetype($src_file);
 	switch($type) {
