@@ -4,7 +4,7 @@ Donate link: http://xfuxing.com/
 Tags: photobucket,widget,sidebar,images,gallery,thickbox
 Requires at least: 2.7.1
 Tested up to: 2.8.4
-Stable tag: 0.8
+Stable tag: 0.9
 
 photobucket Widget works as a widget, making very easy for you to embed in sidebars from your photobucket account!
 

@@ -2,7 +2,7 @@
 /*
 Plugin Name: photobucket Widget
 Author URI: http://xfuxing.com
-Plugin URI: http://xfuxing.com/abc/76
+Plugin URI: http://xfuxing.com/2009/plug-in-released-photobucket-widget-for-wordpress.html
 Description: Making very easy for you to embed in sidebars from your photobucket account!
 Author: freephp
 Version: 0.9
