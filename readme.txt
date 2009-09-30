@@ -4,7 +4,7 @@ Donate link: http://xfuxing.com/
 Tags: photobucket,widget,sidebar,images,gallery,thickbox
 Requires at least: 2.7.1
 Tested up to: 2.8.4
-Stable tag: 0.9
+Stable tag: 1.0
 
 photobucket Widget works as a widget, making very easy for you to embed in sidebars from your photobucket account!
 
@@ -70,6 +70,11 @@ If you have additional questions, please message in my blog, I will reply you as
 1. screenshot-1.jpg
 
 == Changelog ==
+
+= 1.0 [SEP 30, 2009] =
+* Error: When photobucket maintenance, can not display pictures.
+* This is because they can not get a result of RSS content.
+* Thank "revelc(http://hply.info)" proposed BUG.
 
 = 0.9 [SEP 15, 2009] =
 * Error Display: "PHP Error: Call to undefined function exif_imagetype()"

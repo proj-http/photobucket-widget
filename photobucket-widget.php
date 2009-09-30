@@ -2,12 +2,47 @@
 /*
 Plugin Name: photobucket Widget
 Author URI: http://xfuxing.com
-Plugin URI: http://xfuxing.com/2009/plug-in-released-photobucket-widget-for-wordpress.html
+Plugin URI: http://xfuxing.com/abc/76
 Description: Making very easy for you to embed in sidebars from your photobucket account!
 Author: freephp
-Version: 0.9
+Version: 1.0
 */
 load_plugin_textdomain('photobucket-widget', 'wp-content/plugins/photobucket-widget');
+
+function remote_file_exists_WZ($url_file){ //2009-9-30
+	$url_file = trim($url_file);
+	if (empty($url_file)) return false;
+	$url_arr = parse_url($url_file);
+	if (!is_array($url_arr) || empty($url_arr)) return false;
+	$host = $url_arr['host'];
+	$path = $url_arr['path'] ."?".$url_arr['query'];
+	$port = isset($url_arr['port']) ?$url_arr['port'] : "80";
+	$fp = fsockopen($host, $port, $err_no, $err_str,30);
+	if (!$fp) return false;
+	$request_str = "GET ".$path."HTTP/1.1\r\n";
+	$request_str .= "Host:".$host."\r\n";
+	$request_str .= "Connection:Close\r\n\r\n";
+	fwrite($fp,$request_str);
+	$first_header = fgets($fp, 1024);
+	fclose($fp);
+	if (trim($first_header) == "") return false;
+	if (!preg_match("/200/", $first_header)) return false;
+	return true;
+}
+
+function getrssfile_WZ($filename){ //2009-9-30
+	if (!remote_file_exists_WZ($filename)) return;
+	if (file_exists(dirname(__FILE__)."/photobucket.rss")){
+		$objdate = date("Y-m-d", filemtime(dirname(__FILE__)."/photobucket.rss"));
+		$nowdate = date("Y-m-d");
+		$Days = round((strtotime($nowdate)-strtotime($objdate))/3600/24);
+		if ($Days > 6){
+			copy($filename, dirname(__FILE__)."/photobucket.rss");
+		}
+	} else {
+		copy($filename, dirname(__FILE__)."/photobucket.rss");
+	}
+}
 
 function photobucket_widget_echo(){
 	$options = get_option('widget_photobucket');
@@ -25,7 +60,13 @@ function photobucket_widget_echo(){
 		require_once(ABSPATH . WPINC . '/rss.php');
 	else
 		require_once(ABSPATH . WPINC . '/rss-functions.php');
+	getrssfile_WZ($feedurl); //2009-9-30
 	$rss = fetch_rss($feedurl);
+	if (empty($rss->items)){ //2009-9-30
+		if (!file_exists(dirname(__FILE__)."/photobucket.rss")) return;
+		$feedurl = get_option('siteurl')."/wp-content/plugins/photobucket-widget/photobucket.rss";
+		$rss = fetch_rss($feedurl);
+	}
 	if (!empty($rss->items)) {
 		$i = -1;
 		foreach($rss->items as $item) {
